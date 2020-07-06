@@ -1,0 +1,77 @@
+{% extends 'Voucher/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+<p class='lead'>增加会计科目</p>
+<form method='POST'>
+	{% crispy form  %}
+        {{ form.non_field_errors }}
+<p class='lead' style='margin-top:90px;'>增加二级会计科目</p>
+<table class='table'>
+	<thead>
+		<tr>
+			<th scope='col'>科目名称</th>
+			<th scope='col'>科目编码</th>
+			<th scope='col'>删除</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for form in formset %}
+		<tr><td>
+				{{ form.name.errors }}{{ form.name }}</td><td>{{ form.code.errors }}{{ form.code }}</td><td>
+				{{ form.DELETE }}
+			</td><td>{{ form.id }}</td></tr>
+		{% endfor %}
+	</tbody>
+	{{ formset.management_form }}
+</table> 
+	<button type='submit' class='btn btn-info' name='update'>修改</button>
+	<button type='submit' class='btn btn-success' name='saveadd'>修改并继续编辑</button>
+	<a  class='btn btn-danger' href='{% url 'voucher:subject-list' %}'>返回</a>
+</form> {% endblock content %}
+{% comment %}
+{% extends 'Voucher/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<p class='lead'>增加会计科目</p>
+<form method='POST' >
+	{% csrf_token %}
+	{{ form.non_field_errors }}
+	<div  class='form-group row'>
+
+		{{ form.name.errors }}
+		<label for={{ form.name.id_for_label }} class='col-sm-2 col-form-label'>科目名称
+			
+		</label>	
+		<div class='col-sm-6'>
+		{{ form.name }}
+		</div>
+	</div>
+	<div class='form-group row'>
+
+		{{ form.code.errors }}
+		<label for={{ form.code.id_for_label }} class='col-sm-2 col-form-label'>科目编码
+			
+		</label>	
+		<div class='col-sm-6'>
+		{{ form.code }}
+		</div>
+	</div>
+	<div class='form-group row'>
+		<label for={{ form.category.id_for_label }} class='col-sm-2 col-form-label'>科目类型
+			
+		</label>	
+		<div class='col-sm-6'>
+		{{ form.category }}
+		</div>
+	</div>
+	
+<button class='btn btn-outline-info btn-lg' type='submmit'>
+		添加
+	</button>
+</form>
+	{% endblock content %}
+{% endcomment %}
+
+
+
